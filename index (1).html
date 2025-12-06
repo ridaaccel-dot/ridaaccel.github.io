@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RIDA ACCEL S.A. de C.V. — Consultoría Administrativa y Tecnológica</title>
+  <!-- FAVICON CON EL NUEVO ESCUDO -->
+  <link rel="icon" href="imagenes/rida_accel_escudo.png">
+  <style>
+    :root{
+      --primary:#0a2342;
+      --accent:#d4a016;
+      --text:#f5f7fb;
+      --muted:#a9b4c7;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:radial-gradient(1200px 600px at 80% -10%,#1b4b84 0%,#0a2342 45%,#081628 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    .wrap{max-width:1150px;margin:auto;padding:0 20px}
+    header{
+      background:linear-gradient(180deg,rgba(10,35,66,.9),rgba(10,35,66,.55));
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    /* LOGO DEL HEADER: NUEVO ESCUDO */
+    .logo-header{height:55px;border-radius:10px;object-fit:contain}
+    nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:15px;opacity:.9;cursor:pointer;}
+    nav a:hover,nav a.active{opacity:1;text-decoration:underline}
+
+    /* PANTALLA DE BIENVENIDA CON LOGO */
+    #welcome-overlay{
+      position:fixed;
+      inset:0;
+      background:radial-gradient(900px 500px at 50% 0%,#1b4b84 0%,#0a2342 45%,#000 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      z-index:9999;
+      /* Dura 5 segundos visible y se desvanece en 2 segundos */
+      animation:welcomeFadeOut 2s ease 5s forwards;
+    }
+    .welcome-content{
+      text-align:center;
+    }
+    .welcome-logo{
+      width:320px;
+      max-width:80vw;
+      border-radius:16px;
+      box-shadow:0 12px 35px rgba(0,0,0,.7);
+      animation:logoPulse 2.2s ease-in-out infinite;
+    }
+    .welcome-text{
+      margin-top:18px;
+      font-size:18px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      color:#f5f7fb;
+      text-shadow:0 3px 10px rgba(0,0,0,.8);
+    }
+    @keyframes welcomeFadeOut{
+      to{
+        opacity:0;
+        visibility:hidden;
+      }
+    }
+    @keyframes logoPulse{
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.04);}
+    }
+
+    /* Sección principal */
+    .hero{
+      text-align:center;
+      padding:160px 0 140px;
+      position:relative;
+      /* HERO CON EL NUEVO ESCUDO */
+      background:url('imagenes/rida_accel_escudo.png') center/contain no-repeat fixed;
+      background-color:#020812;
+    }
+    .hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.65);}
+    .hero>*{position:relative;z-index:2;}
+    .subtitle{
+      color:#e6e6e6;
+      font-size:18px;
+      max-width:900px;
+      margin:auto;
+      line-height:1.8;
+      text-shadow:0 2px 6px rgba(0,0,0,0.7);
+    }
+
+    /* BUZÓN DE SUGERENCIAS */
+    .sugerencia-box {
+      position:relative;
+      background:#151E3D;
+      padding:20px;
+      border-radius:8px;
+      box-shadow:0px 4px 8px rgba(0,0,0,0.2);
+      width:300px;
+      max-width:100%;
+      margin:20px auto;
+      overflow:hidden;
+    }
+    /* Logo detrás del texto: NUEVO ESCUDO */
+    .sugerencia-box::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('imagenes/rida_accel_escudo.png') center/80% no-repeat;
+      opacity:0.08;
+      pointer-events:none;
+      filter:blur(0.5px);
+    }
+    .sugerencia-box *{
+      position:relative;
+      z-index:1;
+    }
+    .sugerencia-box h2 {
+      text-align:center;
+      margin-bottom:15px;
+    }
+    .sugerencia-box textarea {
+      width:100%;
+      height:100px;
+      padding:10px;
+      border-radius:5px;
+      border:1px solid #ccc;
+      resize:none;
+      background:rgba(5,10,30,.85);
+      color:#f5f7fb;
+    }
+    .sugerencia-box textarea::placeholder{
+      color:#a9b4c7;
+    }
+    .sugerencia-box button {
+      margin-top:10px;
+      width:100%;
+      padding:10px;
+      background:#4CAF50;
+      color:white;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .sugerencia-box button:hover {
+      background:#45a049;
+    }
+
+    /* Secciones */
+    section{padding:56px 0;display:none;}
+    section.active{display:block;animation:fade .5s ease;}
+    @keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    h2{font-size:30px;margin:0 0 16px}
+    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px}
+    p{line-height:1.6}
+    footer{
+      padding:40px 0;
+      border-top:1px solid rgba(255,255,255,.08);
+      text-align:center;
+      color:var(--muted);
+      background:linear-gradient(0deg,rgba(0,0,0,.12),transparent);
+    }
+    .logo-footer{height:40px;border-radius:8px}
+
+    @media(max-width:900px){
+      .nav{flex-wrap:wrap;gap:8px;height:auto;padding:10px 0}
+      nav a{margin:6px 12px 0 0;display:inline-block}
+      .hero{background-attachment:scroll;padding:120px 0 100px}
+      .subtitle{font-size:16px;padding:0 10px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PANTALLA DE BIENVENIDA -->
+  <div id="welcome-overlay">
+    <div class="welcome-content">
+      <img src="imagenes/rida_accel_escudo.png" alt="RIDA ACCEL" class="welcome-logo">
+      <div class="welcome-text">Bienvenido a RIDA ACCEL</div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <img src="imagenes/rida_accel_escudo.png" alt="RIDA ACCEL" class="logo-header">
+        <div>RIDA ACCEL S.A. de C.V.</div>
+      </div>
+      <nav>
+        <a data-target="inicio" class="active">Inicio</a>
+        <a data-target="nosotros">Nosotros</a>
+        <a data-target="servicios">Servicios</a>
+        <a data-target="contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- INICIO -->
+  <section id="inicio" class="active">
+    <div class="hero">
+      <div class="wrap">
+        <p class="subtitle">
+          RIDA ACCEL nació gracias a la unión de dos personas que, aunque al principio apenas se conocían,
+          compartían un mismo ideal: impulsar e innovar en el crecimiento de las microempresas mexicanas.
+          Su propósito común fue brindar soluciones administrativas y tecnológicas que permitan a los
+          pequeños negocios alcanzar su máximo potencial, competir con las grandes compañías y, al mismo
+          tiempo, contribuir a la generación de empleos y al desarrollo económico de México.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <div class="wrap">
+      <h2>Nosotros</h2>
+      <div class="card">
+        <h3>Filosofía</h3>
+        <p><strong>Soluciones e innovación:</strong> Para cada dificultad hay una solución.</p>
+        <h3>Propósitos</h3>
+        <p>
+          Dar soluciones en el menor tiempo posible sin cometer errores en tiempo y forma; mantener a tus
+          empleados felices será un objetivo en común para que se sientan valorados; la transparencia y
+          nuestra ética profesional es el objetivo en común para lograr el éxito.
+        </p>
+        <h3>Misión</h3>
+        <p>
+          Acompañar a las microempresas en su proceso de crecimiento mediante asesoría personalizada,
+          capacitación continua y estrategias prácticas que les permitan alcanzar sus objetivos empresariales.
+        </p>
+        <h3>Visión</h3>
+        <p>
+          Ser la empresa de consultoría líder en el fortalecimiento y crecimiento sostenible de las
+          microempresas, impulsando su competitividad y desarrollo a través de soluciones estratégicas,
+          innovadoras y accesibles.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="wrap">
+      <h2>Servicios</h2>
+      <div class="card">
+        <p>
+          Consultoría tecnológica y administrativa,<br>
+          Desarrollo de software a medida,<br>
+          Optimización de procesos,<br>
+          Soporte técnico,<br>
+          Capacitación.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="wrap">
+      <h2>Contacto</h2>
+      <div class="card">
+        <p><strong>Teléfonos:</strong> 55-80-60-62-95 / 729-150-78-81</p>
+        <p><strong>Correo:</strong> <a href="mailto:ridaaccel@gmail.com" style="color:#4aa3ff;">ridaaccel@gmail.com</a></p>
+
+
+        <div class="sugerencia-box">
+          <h2>Apóyanos con tu sugerencia</h2>
+          <form id="form-sugerencia">
+            <textarea placeholder="Escribe aquí tu sugerencia..." required></textarea>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="imagenes/rida_accel_escudo.png" alt="RIDA ACCEL" class="logo-footer"><br>
+    © <span id="y"></span> RIDA ACCEL S.A. de C.V. — Todos los derechos reservados
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Navegación entre secciones
+    const links = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        const target = link.getAttribute('data-target');
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        links.forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        window.scrollTo({top: 0, behavior: "smooth"});
+      });
+    });
+
+    // Manejo del formulario de sugerencias
+    const formSugerencia = document.getElementById("form-sugerencia");
+    if (formSugerencia) {
+      formSugerencia.addEventListener("submit", function(e){
+        e.preventDefault();
+        alert("¡Gracias por tu sugerencia!");
+        this.reset();
+      });
+    }
+  </script>
+
+</body>
+</html>
